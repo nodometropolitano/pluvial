@@ -8,10 +8,10 @@
   <title>Tipologías de Precariedad - Nodo Metropolitano</title>
   <meta name="description" content="Visualización de datos para los indicadores de precariedad hídrica y precariedad social en la Ciudad de México.">
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
-  <link rel="mask-icon" href="/images/favicon.svg" color="#202020">
+  <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="images/favicon-16x16.png">
+  <link rel="mask-icon" href="images/favicon.svg" color="#202020">
   <meta name="theme-color" content="#ffffff">
 
   <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
@@ -51,7 +51,7 @@
     </div>
 
     <footer>
-      <small>© Nodo Metropolitano</small>
+      <a href="http://www.nodometropolitano.com" target="_blank">© 2018 Nodo Metropolitano</a>
     </footer>
 
   </div>
@@ -145,7 +145,7 @@
     var popup
 
 
-    // load
+    // Load
     getJSON('https://raw.githubusercontent.com/nodometropolitano/pluvial/master/data/tipologias.geojson')
       .then(function (data) {
           var vals = {}
@@ -157,7 +157,6 @@
             'generateId': true
           })
 
-          // geojson.features.forEach(function (feature) {
           Object.keys(tiposPrecariedad).forEach(function (feature) {
 
             var tipologia = feature

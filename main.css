@@ -37,8 +37,7 @@ header {
 }
 
 
-
-
+/* Footer */
 footer {
     z-index: 101;
     height: 29px;
@@ -47,24 +46,29 @@ footer {
     bottom: 0;
     width: 100%;
     border-top: 1px solid #ddd;
-    /* box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1); */
 }
 
+footer a {
+    display: inline-block;
+    text-decoration: none;
+    font-size: 10px;
+    color: #808080;
+    font-family: Roboto, Arial, sans-serif;
+    margin: 8px 8px;
+    height: 20px;
+    font-weight: 500;
+}
 
 
 /* Map */
 #map {
     z-index: -1;
     position: absolute;
-    /* top: 0; */
     top: 60px;
     bottom: 0;
     height: calc(100% - 60px);
-    /* margin-top: 60px; */
     width: 100%;
 }
-
-
 
 
 /* Legend */
@@ -93,7 +97,7 @@ footer {
 
 #legendary:hover {
     cursor: pointer;
-    background-color: #fcfcfc;
+    background-color: #fafafa;
     transition: background-color .2s;
 }
 
@@ -123,8 +127,6 @@ footer {
 
 
 
-
-
 #checks {
     margin: 0;
     overflow: hidden;
@@ -141,13 +143,6 @@ footer {
     padding: 0 16px;
     transition: all 0.3s ease;
 }
-
-
-
-
-
-
-
 
 
 
@@ -255,11 +250,6 @@ input[type="checkbox"] {
 #_09:checked {
     background-color: #ff2020;
 }
-
-
-
-
-
 
 
 
