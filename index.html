@@ -1,165 +1,123 @@
 <!DOCTYPE html>
-<html>
+<html lang="es" dir="ltr">
 
 <head>
-  <meta charset='utf-8' />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+
   <title>Tipologías de Precariedad - Nodo Metropolitano</title>
-  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
-  <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.js'></script>
-  <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.44.2/mapbox-gl.css' rel='stylesheet' />
+  <meta name="description" content="Visualización de datos para los indicadores de precariedad hídrica y precariedad social en la Ciudad de México.">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/favicon.svg" color="#202020">
+  <meta name="theme-color" content="#ffffff">
+
+  <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.js"></script>
+  <link href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.51.0/mapbox-gl.css" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/css?family=Roboto:400,500,700" rel="stylesheet">
-  <style>
-    /*CSS*/
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Roboto, Arial, sans-serif;
-      font-size: 14px;
-    }
+  <link href="main.css" rel="stylesheet">
 
-    #header {
-      position: relative;
-      font-size: 16px;
-      font-weight: 700;
-      text-align: center;
-      margin: 20px;
-      color: rgba(0, 0, 0, 0.8);
-    }
-
-    #map {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      margin-top: 60px;
-      width: 100%;
-    }
-
-    li {
-      padding: 3px 0;
-    }
-
-    #panel {
-      background: white;
-      width: 300px;
-      height: auto;
-      border: 1px solid rgba(0, 0, 0, 0.05);
-      position: absolute;
-      right: 20px;
-      bottom: 40px;
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-      color: #404040;
-      border-radius: 4px;
-      letter-spacing: .01em;
-    }
-
-    h4 {
-      text-transform: uppercase;
-      border-bottom: 1px solid #ddd;
-      margin: 0;
-      padding: 14px;
-      color: #404040;
-      letter-spacing: .05em;
-      font-size: 14px;
-      font-weight: 700;
-    }
-
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 16px;
-    }
-
-    ul span {
-      width: 10px;
-      height: 10px;
-      display: inline-block;
-      margin-right: 8px;
-      border-radius: 50%;
-    }
-
-    li {
-      padding: 3px 0;
-    }
-
-    dd {
-      margin-left: 0px;
-      margin-left: 0px;
-      margin-bottom: 0px;
-      margin-top: 0px;
-      font-weight: bold;
-      color: rgba(0, 0, 0, .6);
-    }
-
-    .mapboxgl-popup-content {
-      font-size: 14px;
-      min-width: 200px;
-      max-width: 400px;
-      box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.2);
-    }
-
-    dl {
-      margin-bottom: 0px;
-      margin-top: 0px;
-      color: rgba(0, 0, 0, 0.4);
-    }
-  </style>
 </head>
 
 
 <body>
 
-  <div id='header'>Tipologías de Precariedad Hídrica (PH) y Social (PS)</div>
+  <header>
+    <h1 class="title">Tipologías de Precariedad</h1>
+    <h2 class="subtitle">Hídrica (PH) | Social (PS)</h2>
+  </header>
 
-  <div id='map'></div>
+  <div id="map">
 
-  <div id="panel">
-    <h4>Tipologías</h4>
-    <ul>
-      <li><span style="background: hsla(120, 80%, 40%, 0.6);"></span>PH Baja / PS Baja</li>
-      <li><span style="background: hsla(270, 100%, 50%, 0.4);"></span>PH Baja / PS Media baja</li>
-      <li><span style="background: hsla(270, 100%, 50%, 0.6);"></span>PH Baja / PS Media</li>
-      <li><span style="background: hsla(270, 100%, 50%, 0.8);"></span>PH Baja / PS Media alta</li>
-      <li><span style="background: hsl(270, 100%, 50%);"></span>PH Baja / PS Alta</li>
-      <li><span style="background: hsla(30, 100%, 50%, 0.5);"></span>PH Media / PS Baja</li>
-      <li><span style="background: hsla(30, 100%, 50%, 0.75);"></span>PH Media / PS Media</li>
-      <li><span style="background: hsl(30, 100%, 50%);"></span>PH Media / PS Alta</li>
-      <li><span style="background: hsl(0, 80%, 50%);"></span>PH Alta / PS Alta</li>
-    </ul>
+    <div id="legend">
+      <div id="legendary">
+        <h4 id="legend-title">Tipologías</h4>
+        <span id="minmax">–</span>
+      </div>
+
+      <div id="checks" class="open">
+        <label for="_01"><input type="checkbox" id="_01" checked>PH Baja / PS Baja</label></li>
+        <label for="_02"><input type="checkbox" id="_02" checked>PH Baja / PS Media-Baja</label></li>
+        <label for="_03"><input type="checkbox" id="_03" checked>PH Baja / PS Media</label></li>
+        <label for="_04"><input type="checkbox" id="_04" checked>PH Baja / PS Media-Alta</label></li>
+        <label for="_05"><input type="checkbox" id="_05" checked>PH Baja / PS Alta</label></li>
+        <label for="_06"><input type="checkbox" id="_06" checked>PH Media / PS Baja</label></li>
+        <label for="_07"><input type="checkbox" id="_07" checked>PH Media / PS Media</label></li>
+        <label for="_08"><input type="checkbox" id="_08" checked>PH Media / PS Alta</label></li>
+        <label for="_09"><input type="checkbox" id="_09" checked>PH Alta / PS Alta</label></li>
+      </div>
+    </div>
+
+    <footer>
+      <small>© Nodo Metropolitano</small>
+    </footer>
+
   </div>
 
 
   <script type="text/javascript">
+    var getJSON = function (url) {
+      return new Promise(function (resolve, reject) {
+        var xhr = new XMLHttpRequest()
+        xhr.open('get', url, true)
+        xhr.responseType = 'json'
+        xhr.onload = function () {
+          var status = xhr.status
+          if (status == 200) {
+            resolve(xhr.response)
+          } else {
+            reject(status)
+          }
+        }
+        xhr.send()
+      })
+    }
+
     var tiposPrecariedad = {
       'PH Baja / PS Baja': 'PH Baja / PS Baja',
-      'PH Baja / PS Media baja': 'PH Baja / PS Media baja',
+      'PH Baja / PS Media baja': 'PH Baja / PS Media-Baja',
       'PH Baja / PS Media': 'PH Baja / PS Media',
-      'PH Baja / PS Media alta': 'PH Baja / PS Media alta',
+      'PH Baja / PS Media alta': 'PH Baja / PS Media-Alta',
       'PH Baja / PS Alta': 'PH Baja / PS Alta',
       'PH Media / PS Baja': 'PH Media / PS Baja',
       'PH Media / PS Media': 'PH Media / PS Media',
       'PH Media / PS Alta': 'PH Media / PS Alta',
       'PH Alta / PS Alta': 'PH Alta / PS Alta',
-    };
-    var colorPrecariedad = {
-      'PH Baja / PS Baja': ' style="color:hsla(120, 80%, 40%, 0.6);"',
-      'PH Baja / PS Media baja': ' style="color:hsla(270, 100%, 50%, 0.4);"',
-      'PH Baja / PS Media': ' style="color:hsla(270, 100%, 50%, 0.6);"',
-      'PH Baja / PS Media alta': ' style="color:hsla(270, 100%, 50%, 0.8);"',
-      'PH Baja / PS Alta': ' style="color:hsl(270, 100%, 50%);"',
-      'PH Media / PS Baja': ' style="color:hsla(30, 100%, 50%, 0.5);"',
-      'PH Media / PS Media': ' style="color:hsla(30, 100%, 50%, 0.75);"',
-      'PH Media / PS Alta': ' style="color:hsl(30, 100%, 50%);"',
-      'PH Alta / PS Alta': ' style="color:hsl(0, 80%, 50%);"',
-    };
+    }
+    var colorsPrecariedad = {
+      'PH Baja / PS Baja': '#7ee07e',
+      'PH Baja / PS Media baja': '#cc99ff',
+      'PH Baja / PS Media': '#b366ff',
+      'PH Baja / PS Media alta': '#9933ff',
+      'PH Baja / PS Alta': '#8000ff',
+      'PH Media / PS Baja': '#ffbf7f',
+      'PH Media / PS Media': '#ffa040',
+      'PH Media / PS Alta': '#ff8000',
+      'PH Alta / PS Alta': '#ff2020',
+    }
+    var layersPrecariedad = {
+      'PH Baja / PS Baja': '_01',
+      'PH Baja / PS Media baja': '_02',
+      'PH Baja / PS Media': '_03',
+      'PH Baja / PS Media alta': '_04',
+      'PH Baja / PS Alta': '_05',
+      'PH Media / PS Baja': '_06',
+      'PH Media / PS Media': '_07',
+      'PH Media / PS Alta': '_08',
+      'PH Alta / PS Alta': '_09',
+    }
+
 
     // Map
     mapboxgl.accessToken =
       'pk.eyJ1Ijoibm9kb21ldHJvcG9saXRhbm8iLCJhIjoiY2pkZjlqNnFhMDUxNDJ4cGdqZWp2YjF0cSJ9.4Ya-PINBWt2DjO1-XboVCw'
     var map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://styles/nodometropolitano/cjhghdn154qa82spnhq3x8mvd',
-      center: [-99.15, 19.35],
-      zoom: 12,
+      style: 'mapbox://styles/nodometropolitano/cjpgz4hqm1c9p2rmvidvlya4f',
+      center: [-99.133, 19.433],
+      zoom: 12.5,
       minZoom: 12,
       maxZoom: 15.5,
       maxBounds: [
@@ -169,7 +127,7 @@
       hash: false,
       logoPosition: 'bottom-left',
       attributionControl: false
-    });
+    })
 
     // Controls
     map.addControl(new mapboxgl.NavigationControl(), 'top-right')
@@ -184,49 +142,177 @@
     map.addControl(geoControl, 'top-right')
 
 
-    // Change the cursor to a pointer when the mouse is over the places layer.
-    map.on('mouseenter', 'tipos-precariedad', function () {
-      map.getCanvas().style.cursor = 'pointer';
-    });
-
-    // Change it back to a pointer when it leaves.
-    map.on('mouseleave', 'tipos-precariedad', function () {
-      map.getCanvas().style.cursor = '';
-    });
+    var popup
 
 
-    // Mouse click
-    map.on('click', function (event) {
-      var geometry = event.point;
-      var parameters = {
-        layers: ['tipos-precariedad']
-      };
+    // load
+    getJSON('https://raw.githubusercontent.com/nodometropolitano/pluvial/master/data/tipologias.geojson')
+      .then(function (data) {
+          var vals = {}
 
-      var features = map.queryRenderedFeatures(geometry, parameters);
-      var geo = features[0];
+          // Define source
+          map.addSource('largo', {
+            'type': 'geojson',
+            data: data,
+            'generateId': true
+          })
 
-      if (features.length) {
-        var coordinates = event.lngLat; // or var coordinates = geo.geometry.coordinates.slice();
+          // geojson.features.forEach(function (feature) {
+          Object.keys(tiposPrecariedad).forEach(function (feature) {
 
-        // Data points //.manz ph cl
-        var cluster = tiposPrecariedad[geo.properties['manz ph cl']] || '—';
-        var color = colorPrecariedad[geo.properties['manz ph cl']] || '';
-        //var ind_fisico = geo.properties.IND_FISICO || '—';
-        //var ind_social = geo.properties.IND_SOCIAL || '—';
+            var tipologia = feature
+            var layerID = layersPrecariedad[tipologia]
 
-        var popup = new mapboxgl.Popup()
-          .setLngLat(coordinates)
-          .setHTML('<dl>' +
-            '<dt>Tipología de precariedad:</dt>' +
-            '<dd' + color + '>' + cluster + '</dd>' +
-            //'<dt>Indicador Hídrico</dt>' +
-            //'<dd>' + ind_fisico + '</dd>' +
-            //'<dt>Indicador Social</dt>' +
-            //'<dd>' + ind_social + '</dd>' +
-            '</dl>')
-          .addTo(map);
+            if (!vals[layerID]) {
+              vals[layerID] = tipologia
+              map.addLayer({
+                'id': layerID,
+                'type': 'fill',
+                'source': 'largo',
+                'paint': {
+                  'fill-color': colorsPrecariedad[tipologia],
+                  'fill-outline-color': 'hsla(0, 0%, 0%, 0)',
+                  'fill-opacity': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    12,
+                    0.8,
+                    16,
+                    0.6
+                  ]
+                },
+                'filter': ['==', 'CLUSTER', tipologia]
+              }, 'hillshade_highlight_bright')
+
+              // Turn layers on and off
+              document.getElementById(layerID).addEventListener('change', function (event) {
+                map.setLayoutProperty(layerID, 'visibility', event.target.checked ? 'visible' :
+                  'none')
+              })
+
+              // Change the cursor to a pointer when the mouse is over the places layer.
+              map.on('mousemove', layerID, function () {
+                map.getCanvas().style.cursor = 'pointer'
+              })
+
+              // Change it back to a pointer when it leaves.
+              map.on('mouseleave', layerID, function () {
+                map.getCanvas().style.cursor = ''
+              })
+
+              // Mouse click
+              map.on('click', function (event) {
+                var geometry = event.point
+                var parameters = {
+                  layers: [layerID]
+                }
+
+                var features = map.queryRenderedFeatures(geometry, parameters)
+                var geo = features[0]
+
+                if (features.length) {
+                  var coordinates = event.lngLat // or var coordinates = geo.geometry.coordinates.slice()
+
+                  var cluster = tiposPrecariedad[geo.properties['CLUSTER']] || '—'
+                  var color = colorsPrecariedad[geo.properties['CLUSTER']] || ''
+                  var population = geo.properties['POB']
+                  var homes = geo.properties['VIV']
+                  var inhabitants = Math.floor((population / homes) * 100) / 100
+
+                  var populationBar = Math.min(180, Math.max(1, population / 1000 * 180))
+                  var homesBar = Math.min(180, Math.max(1, homes / 200 * 180))
+                  var inhabitantsBar = Math.min(180, Math.max(1, inhabitants / 5 * 180))
+
+                  popup = new mapboxgl.Popup()
+                    .setLngLat(coordinates)
+                    .setHTML(
+                      '<span class="tipologia" style="background-color:' + color + '">' + cluster + '</span>' +
+                      '<div class="content">' +
+                      '<div class="block">' +
+                      '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">' +
+                      '<path class="cls-1" d="M13,24V17.5h-.5a1,1,0,0,1-1-1V12a2,2,0,0,1,2-2h3a2,2,0,0,1,2,2v4.5a1,1,0,0,1-1,1H17V24a1,1,0,0,1-1,1H14A1,1,0,0,1,13,24Z"/><circle class="cls-1" cx="15" cy="7" r="2"/>' +
+                      '</svg>' +
+                      '<span class="data"><b>' + population.toString().replace(/(\d)(?=(\d{3})+(?:\.\d+)?$)/g,
+                        '$1,') + '</b> habitantes' +
+                      '</span>' +
+                      '<div class="bar-background">' +
+                      '</div>' +
+                      '<div class="bar-fill" style="background-color:' + color + '; width:' + populationBar +
+                      'px;">' +
+                      '</div>' +
+                      '<span class="lower">0</span><span class="upper">+1000</span>' +
+                      '</div>' +
+                      '<div class="block">' +
+                      '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">' +
+                      '<path class="cls-1" d="M13.32,21.16V17h3.36v4.2a.85.85,0,0,0,.84.84H20a.85.85,0,0,0,.84-.84V15.28h1.43a.42.42,0,0,0,.28-.74l-7-6.33a.87.87,0,0,0-1.13,0l-7,6.33a.42.42,0,0,0,.28.74H9.11v5.88A.85.85,0,0,0,10,22h2.53A.85.85,0,0,0,13.32,21.16Z"/>' +
+                      '</svg>' +
+                      '<span class="data"><b>' + homes + '</b> viviendas' +
+                      '</span>' +
+                      '<div class="bar-background">' +
+                      '</div>' +
+                      '<div class="bar-fill" style="background-color:' + color + '; width:' + homesBar +
+                      'px;">' +
+                      '</div>' +
+                      '<span class="lower">0</span><span class="upper">+200</span>' +
+                      '</div>' +
+                      '<div class="block">' +
+                      '<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="30" height="30" viewBox="0 0 30 30">' +
+                      '<path class="cls-1" d="M8.54,23.55V17.38H8.06a1,1,0,0,1-1-.95V12.15A1.91,1.91,0,0,1,9,10.25h2.85a1.91,1.91,0,0,1,1.9,1.9v4.28a1,1,0,0,1-.95.95h-.47v6.17a1,1,0,0,1-.95.95H9.49A1,1,0,0,1,8.54,23.55Zm11.87,0V18.8h1.53a1,1,0,0,0,.9-1.25l-2-6A1.91,1.91,0,0,0,19,10.25h-.11a1.9,1.9,0,0,0-1.81,1.3l-2,6A1,1,0,0,0,16,18.8h1.53v4.75a1,1,0,0,0,1,.95h.95A1,1,0,0,0,20.41,23.55ZM10.44,9.3a1.9,1.9,0,1,0-1.9-1.9A1.9,1.9,0,0,0,10.44,9.3ZM19,9.3a1.9,1.9,0,1,0-1.9-1.9A1.9,1.9,0,0,0,19,9.3Z"/>' +
+                      '</svg>' +
+                      '<span class="data"><b>' + inhabitants + '</b> habitantes / vivienda' +
+                      '</span>' +
+                      '<div class="bar-background">' +
+                      '</div>' +
+                      '<div class="bar-fill" style="background-color:' + color + '; width:' + inhabitantsBar +
+                      'px;">' +
+                      '</div>' +
+                      '<span class="lower">0</span><span class="upper">+5</span>' +
+                      '</div>' +
+                      '</div>'
+                    )
+                    .addTo(map)
+                  popup._tip.setAttribute('style', 'border-bottom-color:' + color)
+
+                  map.on('move', function () {
+                    if (popup.isOpen()) {
+                      _content = popup._container.getAttribute('class')
+                      if (_content === 'mapboxgl-popup mapboxgl-popup-anchor-bottom-left' ||
+                        _content === 'mapboxgl-popup mapboxgl-popup-anchor-bottom-right') {
+                        popup._content.setAttribute('style', 'background-color: #fff')
+                      } else {
+                        popup._content.setAttribute('style', 'background-color:' + color)
+                      }
+                    }
+                  })
+                }
+              })
+            }
+          })
+        },
+        function (status) {
+          console.error('Hubo un error.')
+        })
+
+    var legendState = 'max'
+
+    document.getElementById('legendary').addEventListener('click', function (event) {
+      if (legendState === 'max') {
+        document.getElementById('checks').removeAttribute('class')
+        document.getElementById('checks').setAttribute('class', 'shut')
+        document.getElementById('legend-title').style.borderBottom = '0px solid #ddd'
+        document.getElementById('legend-title').style.padding = '15px 16px 13px 16px'
+        document.getElementById('minmax').innerHTML = '+'
+        legendState = 'min'
+      } else {
+        document.getElementById('checks').removeAttribute('class')
+        document.getElementById('checks').setAttribute('class', 'open')
+        document.getElementById('legend-title').style.borderBottom = '1px solid #ddd'
+        document.getElementById('legend-title').style.padding = '15px 16px 11px 16px'
+        document.getElementById('minmax').innerHTML = '–'
+        legendState = 'max'
       }
-    });
+    })
   </script>
 
 </body>
